@@ -21,7 +21,11 @@ def save_to_sheet(name, mobile, requirement, total):
         creds_dict = st.secrets["GOOGLE_SHEET_CREDS"]
         
         # Google se connect karna
-        scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+        # Google se connect karna
+        scopes = [
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive"
+        ]
         creds = Credentials.from_service_account_info(creds_dict, scopes=scopes)
         client = gspread.authorize(creds)
         
@@ -81,3 +85,4 @@ if user_input := st.chat_input("Ask about pipes..."):
     bot_reply = response.choices[0].message.content
     st.chat_message("assistant").write(bot_reply)
     st.session_state.messages.append({"role": "assistant", "content": bot_reply})
+
